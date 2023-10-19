@@ -1,10 +1,8 @@
 #include <iostream>
 #include <functional>
 #include <chrono>
-#include <memory>
 
 #include <rclcpp/rclcpp.hpp>
-#include <rclcpp/qos.hpp>
 #include <std_msgs/msg/bool.hpp>
 
 class Publisher : public rclcpp::Node
@@ -20,8 +18,6 @@ public:
         _pub_testMsg = this->create_publisher<std_msgs::msg::Bool>("test_topic_pubsub", qos_profile_custom);
 
         _timer = this->create_wall_timer(std::chrono::milliseconds{1000}, std::bind(&Publisher::callback, this));
-        auto asdf = _timer;
-        RCLCPP_INFO_STREAM(this->get_logger(), std::to_string(asdf.use_count()) + "/" + std::to_string(_timer.use_count()));
     }
 
 private:
@@ -29,9 +25,15 @@ private:
 
     rclcpp::TimerBase::SharedPtr _timer{nullptr};
 
+    bool _thisisbool{false};
+
     void callback()
     {
-        RCLCPP_INFO_STREAM(this->get_logger(), "this is test!!!");
+        std_msgs::msg::Bool msg{};
+        msg.data = _thisisbool;
+        RCLCPP_INFO_STREAM(this->get_logger(), "sending bool " << msg.data);
+        _pub_testMsg->publish(msg);
+        _thisisbool = !_thisisbool;
     }
 };
 
