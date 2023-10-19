@@ -21,6 +21,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
             msg/TestMsg2.msg
             msg/TestMsg3.msg
             msg/TestMsg4.msg
+            msg/TestMsg5.msg
             # srv/TestService.srv
             # action/TestAction.action
             DEPENDENCIES std_msgs geometry_msgs)
