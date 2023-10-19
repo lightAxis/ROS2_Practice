@@ -1,4 +1,4 @@
-# ROS2_Practice
+# ros2_practice
 my personal ros2 praticing repo
 
 ## Package List
