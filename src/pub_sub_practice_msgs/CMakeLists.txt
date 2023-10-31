@@ -19,7 +19,10 @@ find_package(practice_msgs REQUIRED)
 add_executable(pub_practice_msgs src/pub_practice_msgs.cpp)
 ament_target_dependencies(pub_practice_msgs rclcpp practice_msgs)
 
-install(TARGETS pub_practice_msgs
+add_executable(sub_practice_msgs src/sub_practice_msgs.cpp)
+ament_target_dependencies(sub_practice_msgs rclcpp practice_msgs)
+
+install(TARGETS pub_practice_msgs sub_practice_msgs
 DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
