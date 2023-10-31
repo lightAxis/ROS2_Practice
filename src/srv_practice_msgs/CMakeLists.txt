@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(practice_msgs)
+project(srv_practice_msgs)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -11,22 +11,17 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-find_package(rosidl_default_generators REQUIRED)
-find_package(rosidl_default_runtime REQUIRED)
-find_package(std_msgs)
-find_package(geometry_msgs)
+find_package(rclcpp REQUIRED)
+find_package(practice_msgs REQUIRED)
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-            msg/TestMsg1.msg
-            msg/TestMsg2.msg
-            msg/TestMsg3.msg
-            msg/TestMsg4.msg
-            msg/TestMsg5.msg
+add_executable(client src/client.cpp)
+ament_target_dependencies(client rclcpp practice_msgs)
 
-            srv/TestSrv1.srv
-            # srv/TestService.srv
-            # action/TestAction.action
-            DEPENDENCIES std_msgs geometry_msgs)
+add_executable(server src/server.cpp)
+ament_target_dependencies(server rclcpp practice_msgs)
+
+install(TARGETS client server
+DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -40,5 +35,4 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_export_dependencies(rosidl_default_runtime)
 ament_package()

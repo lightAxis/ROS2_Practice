@@ -1,0 +1,10 @@
+std_msgs/Header header
+float32 a
+float32 b
+uint8 calculation_type
+
+uint8 CALCULATION_TYPE_PLUS =0
+uint8 CALCULATION_TYPE_MINUS=1
+uint8 CALCULATION_TYPE_MAX =2
+---
+float32 c
